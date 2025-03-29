@@ -4,6 +4,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CadastraLivroFilmeSerie {
     private final List<Livro> listLivro = new ArrayList<>();
     private final List<Filme> listFilme = new ArrayList<>();
@@ -23,9 +24,7 @@ public class CadastraLivroFilmeSerie {
         for (Livro item : listLivro){
             if (item.getIsbn().equals(isbn) && item.getTitulo().equals(titulo) && item.getAutor().equals(autor))
                 throw new RuntimeException("Série já cadastrada.");
-        }
-
-        listLivro.add(new Livro(titulo, autor, editora, isbn, publicAno, gender, exemplar, lidoYesNot, pontuacao, review, avaliacao));
+        } listLivro.add(new Livro(titulo, autor, editora, isbn, publicAno, gender, exemplar, lidoYesNot, pontuacao, review, avaliacao));
     }
 
     //Método para cadastrar Filmes
@@ -67,41 +66,30 @@ public class CadastraLivroFilmeSerie {
         while(anoAtual.isBefore(anoIndicado)){
             System.out.println("A data atual é anterior à data especificada.");
             anoIndicado = Year.of(2002);
-        }
-        return true;
+        } return true;
     }
 
     public void listarLivros() {
         for (Livro item : listLivro) {
             System.out.println("Livro: " + item);
-        }
-    }
+        }}
 
     public void listarFilmes(){
         for (Filme item : listFilme){
             System.out.println("Filme: " + item);
-        }
-    }
+        }}
 
     public void listarSeries() {
         for (Serie item : listSerie){
             System.out.println("Series: " + item);
-        }
-    }
+        }}
 
     public void listarTemporadas(){
         for (serieTemporadas item : listTemporada){
             System.out.println("Temporadas: " + item);
-        }
-    }
+        }}
 
-    public List<Livro> getListLivro() {
-        return new ArrayList<>(listLivro);
-    }
-    public List<Filme> getListFilme(){
-        return new ArrayList<>(listFilme);
-    }
-    public List<Serie> getListSerie(){
-        return new ArrayList<>(listSerie);
-    }
+    public List<Livro> getListLivro() {return new ArrayList<>(listLivro);}
+    public List<Filme> getListFilme(){return new ArrayList<>(listFilme);}
+    public List<Serie> getListSerie(){return new ArrayList<>(listSerie);}
 }
