@@ -1,70 +1,55 @@
 // Classe base para itens culturais
-public abstract class ItemCultural {
-    private String titulo;
-    private String genero;
-    private int anoLancamento;
-    private double avaliacaoMedia;
-    private int numeroAvaliacoes;
+package com.pblteste;
 
-    // Construtor
-    public ItemCultural(String titulo, String genero, int anoLancamento) {
-        this.titulo = titulo;
-        this.genero = genero;
-        this.anoLancamento = anoLancamento;
-        this.avaliacaoMedia = 0.0;
-        this.numeroAvaliacoes = 0;
+import java.util.List;
+
+public class AvaliaLivroFilmeSerie {
+    private final CadastraLivroFilmeSerie listcadastro;
+   // Scanner scanner = new Scanner(System.in);
+
+    public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {
+        this. listcadastro = cadastro;
     }
 
-    // Métodos getters e setters
-    public String getTitulo() { return titulo; }
-    public String getGenero() { return genero; }
-    public int getAnoLancamento() { return anoLancamento; }
-    public double getAvaliacaoMedia() { return avaliacaoMedia; }
-
-    // Método para adicionar uma avaliação
-    public void adicionarAvaliacao(int estrelas) {
-        if (estrelas < 1 || estrelas > 5) {
-            throw new IllegalArgumentException("A avaliação deve ser entre 1 e 5 estrelas.");
+    public void AvaliaLivro() {
+        List<Livro> listAvaliaLivro =  listcadastro.getListLivro();
+        if (listAvaliaLivro.isEmpty()) {
+            System.out.println("Nenhum livro cadastrado para avaliação.");
+            return;
         }
-        double totalEstrelas = this.avaliacaoMedia * this.numeroAvaliacoes;
-        totalEstrelas += estrelas;
-        this.numeroAvaliacoes++;
-        this.avaliacaoMedia = totalEstrelas / this.numeroAvaliacoes;
+        for (Livro item : listAvaliaLivro) {
+            System.out.print("Avalie o livro (de 1 a 5): ");
+            int avaliacao = obterAvaliacao();
+            item.setAvaliacao(avaliacao);
+            System.out.println("Livro: " + item);
+        }
+    }
+
+    public void AvaliaFilme() {
+        List<Filme> listAvaliaFilme =  listcadastro.getListFilme();
+        if (listAvaliaFilme.isEmpty()) {
+            System.out.print("Nenhum livro cadastrado para avaliação.");
+            return;
+        }
+        for (Filme item : listAvaliaFilme) {
+            System.out.print("Avalie o livro (de 1 a 5): ");
+            int avaliacao = obterAvaliacao();
+            item.setAvalia_filme(avaliacao);
+            System.out.println("Livro: " + item);
+        }
+    }
+
+    private int obterAvaliacao() {
+        System.out.print("Avalie (de 1 a 5): ");
+        int avaliacao = 5;
+
+        while (avaliacao < 1 || avaliacao > 5) {
+            System.out.print("Avaliação inválida. Insira um valor de 1 a 5: ");
+            avaliacao = 3;
+        }
+        return avaliacao;
     }
 }
-
-// Classe Livro que herda de ItemCultural
-public class Livro extends ItemCultural {
-    private String autor;
-    private String editora;
-    private String isbn;
-
-    // Construtor
-    public Livro(String titulo, String genero, int anoLancamento, String autor, String editora, String isbn) {
-        super(titulo, genero, anoLancamento);
-        this.autor = autor;
-        this.editora = editora;
-        this.isbn = isbn;
-    }
-
-    // Métodos getters e setters
-    public String getAutor() { return autor; }
-    public String getEditora() { return editora; }
-    public String getIsbn() { return isbn; }
-}
-
-// Classe Filme que herda de ItemCultural
-public class Filme extends ItemCultural {
-    private String diretor;
-    private int duracao; // em minutos
-
-    // Construtor
-    public Filme(String titulo, String genero, int anoLancamento, String diretor, int duracao) {
-        super(titulo, genero, anoLancamento);
-        this.diretor = diretor;
-        this.duracao = duracao;
-    }
-
     // Métodos getters e setters
     public String getDiretor() { return diretor; }
     public int getDuracao() { return duracao; }
