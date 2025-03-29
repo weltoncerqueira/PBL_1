@@ -1,11 +1,6 @@
-// Classe base para itens culturais
-package com.pblteste;
-
-import java.util.List;
-
-public class AvaliaLivroFilmeSerie {
+class AvaliaLivroFilmeSerie {
     private final CadastraLivroFilmeSerie listcadastro;
-   // Scanner scanner = new Scanner(System.in);
+    // Scanner scanner = new Scanner(System.in);
 
     public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {
         this. listcadastro = cadastro;
@@ -49,22 +44,4 @@ public class AvaliaLivroFilmeSerie {
         }
         return avaliacao;
     }
-}
-    // Métodos getters e setters
-    public String getDiretor() { return diretor; }
-    public int getDuracao() { return duracao; }
-}
-
-// Classe Serie que herda de ItemCultural
-public class Serie extends ItemCultural {
-    private int numeroTemporadas;
-
-    // Construtor
-    public Serie(String titulo, String genero, int anoLancamento, int numeroTemporadas) {
-        super(titulo, genero, anoLancamento);
-        this.numeroTemporadas = numeroTemporadas;
-    }
-
-    // Métodos getters e setters
-    public int getNumeroTemporadas() { return numeroTemporadas; }
 }
