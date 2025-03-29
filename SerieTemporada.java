@@ -1,3 +1,36 @@
+class SerieTemporadas {
+    private Year temporada_ano;
+    private int qtdEpisodes;
+    private int pontuacao;
+    private String review;
+
+    public SerieTemporadas(int qtdEpisodes, Year ano, int pontuacao, String review){
+        this.temporada_ano = ano;
+        this.qtdEpisodes = qtdEpisodes;
+        this.pontuacao = pontuacao;
+        this.review = review;
+    }
+
+    public Year getTemporada_ano() {return temporada_ano;}
+    public void setTemporada_ano(Year temporada_ano) {this.temporada_ano = temporada_ano;}
+    public int getPontuacao() {return pontuacao;}
+    public void setPontuacao(int pontuacao) {this.pontuacao = pontuacao;}
+    public String getReview() {return review;}
+    public void setReview(String review) {this.review = review;}
+    public Year getAno() {return temporada_ano;}
+    public void setAno(Year ano) {this.temporada_ano = ano;}
+    public int getQtdEpisodes() {return qtdEpisodes;}
+    public void setQtdEpisodes(int qtdEpisodes) {this.qtdEpisodes = qtdEpisodes;}
+    @Override
+    public String toString() {
+        return "{" +
+                "ano: " + temporada_ano.getValue() + // Exibindo o ano como número inteiro
+                ", qtdEpisodes: " + qtdEpisodes +
+                ", review: '" + review + '\'' +
+                ", pontuacao: " + pontuacao +
+                '}';}
+}
+
 class Serie {
     private String titulo;
     private String gender;
@@ -6,6 +39,8 @@ class Serie {
     private String elenco;
     private String tituloOriginal;
     private String ondeVer;
+    private int pontuacaoMedia;
+    private List<SerieTemporadas> temporadas;
 
     public Serie(String titulo, String gender, Year anoLancamento, Year anoEncerramento, String elenco, String tituloOriginal, String ondeVer) {
         this.titulo = titulo;
@@ -15,7 +50,14 @@ class Serie {
         this.elenco = elenco;
         this.tituloOriginal = tituloOriginal;
         this.ondeVer = ondeVer;
+        this.temporadas = new ArrayList<>();
     }
+    public void adicionarTemporada(SerieTemporadas temporada) {this.temporadas.add(temporada);}
+    public List<SerieTemporadas> getTemporada() {return this.temporadas;}
+    public void removeTemporada(SerieTemporadas temporada) {temporadas.remove(temporada);}
+
+    public int getPontuacaoMedia() {return pontuacaoMedia;}
+    public void setPontuacaoMedia(int pontuacaoMedia) {this.pontuacaoMedia = pontuacaoMedia;}
     public String getElenco() {return elenco;}
     public String getTituloOriginal() {return tituloOriginal;}
     public Year getAnoLancamento() {return anoLancamento;}
@@ -40,35 +82,6 @@ class Serie {
                 ", elenco='" + elenco + '\'' +
                 ", tituloOriginal='" + tituloOriginal + '\'' +
                 ", ondeVer='" + ondeVer + '\'' +
+                ", temporadas=" + temporadas +
                 '}';}
-}
-
-
-class serieTemporadas{
-    private String ano;
-    private String qtdEpisodes;
-
-    public serieTemporadas(String ano, String qtdEpisodes){
-        this.ano = ano;
-        this.qtdEpisodes = qtdEpisodes;
-    }
-    public String getAno() {
-        return ano;
-    }
-    public void setAno(String ano) {
-        this.ano = ano;
-    }
-    public String getQtdEpisodes() {
-        return qtdEpisodes;
-    }
-    public void setQtdEpisodes(String qtdEpisodes) {
-        this.qtdEpisodes = qtdEpisodes;
-    }
-    @Override
-    public String toString() {
-        return "{" +
-                "ano: " + ano + '\'' +
-                ", qtdEpisodes: " + qtdEpisodes + '\'' +
-                '}';
-    }
 }
