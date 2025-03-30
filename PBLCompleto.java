@@ -19,7 +19,7 @@ class CadastraLivroFilmeSerie {
         yearTime(anoLancamento);
 
         for (Livro item : listLivro){
-            if (item.getIsbn().toLowerCase().trim().equals(isbn) && item.getTitulo().toLowerCase().trim().equals(titulo))
+            if (item.getIsbn().toLowerCase().trim().equals(isbn.toLowerCase().trim()))
                 throw new RuntimeException("Série já cadastrada.");
         } listLivro.add(new Livro(titulo, autor, editora, isbn, anoLancamento, gender, exemplar, lidoYesNot, pontuacao, review, avaliacao));
     }
