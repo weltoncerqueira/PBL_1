@@ -83,7 +83,7 @@ class CadastraLivroFilmeSerie {
 class AvaliaLivroFilmeSerie {
     private final CadastraLivroFilmeSerie listcadastro;
     public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {this. listcadastro = cadastro;}
-    
+
     public boolean avaliaLivro(int avaliacaoUsuario, String titulo) {
         List<Livro> listAvaliaLivro =  listcadastro.getListLivro();
         if (listAvaliaLivro.isEmpty()) {
@@ -436,7 +436,7 @@ public class Main {
         cadastro.cadastraLivro("Livro A", "Autor A", "Editora A", "ISBN001", Year.of(2020), "Ficção", "Exemplar A", true, 4, "Bom livro", 4);
         cadastro.cadastraLivro("Livro B", "Autor B", "Editora B", "ISBN002", Year.of(2018), "Não Ficção", "Exemplar B", false, 5, "Excelente livro", 5);
         cadastro.cadastraLivro("Livro C", "Autor C", "Editora C", "ISBN003", Year.of(2019), "Ficção", "Exemplar C", true, 3, "Livro médio", 3);
-        
+        System.out.println("\n");
         cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2026), "19;00", "Fantasia", "Eduard", "parkison Lucas liane Jesiane", "mazon", "teto", 0);
         cadastro.cadastraSerie("Breaking Bad", "Drama", Year.of(2003), Year.of(2026), "Bryan Cranston, Aaron Paul", "Breaking Bad", "Netflix", 0, Year.of(2025), 0, "");
 
@@ -450,7 +450,7 @@ public class Main {
 
         boolean r1 = avalia.temporadasReview("Uma porcaria", "Breaking Bad");
 
-        System.out.println("\n\nBUSCA: \n");
+        System.out.println("\n\n");
         Livro ano_livro = buscalivro.porAno(Year.of(2026));
         Livro isbn_livro = buscalivro.porISBN("123456789");
         Livro titulo_livro = buscalivro.porTitulo("O Senhor dos Anéis");
@@ -464,10 +464,11 @@ public class Main {
         Filme titulo_filme = buscafilmeserie.porTitulo("Caminhos");
 
         Serie titulo_serie = buscafilmeserie.buscaSeriePorTitulo("Breaking Bad");
-
-        listaLivro.porAvaliacaoCrescente();
-        listaLivro.porAvaliacaoDecrescente();
-
+        System.out.print("\n\n");
+        List<Livro> list1 = listaLivro.obterLivrosOrdenadosPorAvaliacaoCrescente();
+        List<Livro> list2 = listaLivro.obterLivrosOrdenadosPorAvaliacaoDecrescente();
+        System.out.println("Crescente: " + list1.get(0).getAvaliacao() + "\n" + list1.get(1).getAvaliacao() + "\n" + list1.get(2).getAvaliacao());
+        System.out.println("Decrescente: " +list2.get(0).getAvaliacao() + "\n" + list2.get(1).getAvaliacao() + "\n" + list2.get(2).getAvaliacao());
     }
 }
 
@@ -691,4 +692,3 @@ class Serie {
                 ", temporadas=" + temporadas +
                 '}';}
 }
-
