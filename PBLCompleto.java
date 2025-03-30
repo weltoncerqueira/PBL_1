@@ -210,7 +210,7 @@ class BuscaFilmeSerie {
     public Serie buscaSeriePorTitulo(String titulo){
         List<Serie> listBuscaSerie = cadastro.getListSerie();
         for (Serie serie : listBuscaSerie){
-            if (serie.getElenco().toLowerCase().trim().contains(titulo.toLowerCase().trim()))
+            if (serie.getTitulo().toLowerCase().trim().contains(titulo.toLowerCase().trim()))
                 return serie;
         } return null;
     }
