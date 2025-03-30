@@ -617,7 +617,7 @@ class Serie {
     private String tituloOriginal;
     private String ondeVer;
     private float pontuacaoMedia;
-    private List<SerieTemporadas> temporadas;
+    private final List<SerieTemporadas> temporadas;
 
     public Serie(String titulo, String gender, Year anoLancamento, Year anoEncerramento, String elenco, String tituloOriginal, String ondeVer) {
         this.titulo = titulo;
