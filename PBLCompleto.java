@@ -33,7 +33,7 @@ class CadastraLivroFilmeSerie {
         yearTime(anoLancamento);
 
         for (Filme item : listFilme){
-            if (item.getTitulo().toLowerCase().trim().equals(tituloOriginal))
+            if (item.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim()))
                 throw new RuntimeException("Filme já cadastrado.");
         } listFilme.add(new Filme(titulo, gender, anoLancamento, duracao, direction, roteiro, elenco, tituloOriginal, ondeVer, avaliacao));
     }
@@ -47,7 +47,7 @@ class CadastraLivroFilmeSerie {
         yearTime(anoLancamento);
 
         for (Serie item : listSerie) {
-            if (item.getTitulo().toLowerCase().trim().equals(titulo))
+            if (item.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim()))
                 throw new RuntimeException("Série já cadastrada.");}
 
         Serie serie = new Serie(titulo, gender, anoLancamento, anoEncerramento, elenco, tituloOriginal, ondeVer);
