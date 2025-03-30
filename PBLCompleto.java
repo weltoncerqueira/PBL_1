@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.time.Year;
+import java.util.Scanner;
 
 class CadastraLivroFilmeSerie {
     private final List<Livro> listLivro = new ArrayList<>();
@@ -12,14 +13,13 @@ class CadastraLivroFilmeSerie {
     // Método para cadastrar livro
     public void cadastraLivro(String titulo, String autor, String editora, String isbn, Year anoLancamento, String gender, String exemplar, boolean lidoYesNot,
                               int pontuacao, String review, int avaliacao) {
-        if (titulo == null || autor == null || editora == null || isbn == null || gender == null || exemplar == null)
+        if (titulo == null || autor == null || editora == null || isbn == null || gender == null)
             throw new IllegalArgumentException("Todos os campos devem ser preenchidos.");
 
         yearTime(anoLancamento);
 
-
         for (Livro item : listLivro){
-            if (item.getIsbn().equals(isbn) && item.getTitulo().equals(titulo) && item.getAutor().equals(autor))
+            if (item.getIsbn().toLowerCase().trim().equals(isbn) && item.getTitulo().toLowerCase().trim().equals(titulo))
                 throw new RuntimeException("Série já cadastrada.");
         } listLivro.add(new Livro(titulo, autor, editora, isbn, anoLancamento, gender, exemplar, lidoYesNot, pontuacao, review, avaliacao));
     }
@@ -27,13 +27,13 @@ class CadastraLivroFilmeSerie {
     //Método para cadastrar Filmes
     public void cadastraFilme(String titulo, String gender, Year anoLancamento, String duracao, String direction, String roteiro, String elenco,
                               String tituloOriginal, String ondeVer, int avaliacao){
-        if (titulo == null || gender == null || anoLancamento == null || duracao == null || tituloOriginal == null)
+        if (gender == null || titulo == null)
             throw new IllegalArgumentException("Os campos obrigatórios não podem ser nulos.");
 
         yearTime(anoLancamento);
 
         for (Filme item : listFilme){
-            if (item.getTitulo().equals(titulo))
+            if (item.getTitulo().toLowerCase().trim().equals(tituloOriginal))
                 throw new RuntimeException("Filme já cadastrado.");
         } listFilme.add(new Filme(titulo, gender, anoLancamento, duracao, direction, roteiro, elenco, tituloOriginal, ondeVer, avaliacao));
     }
@@ -41,13 +41,13 @@ class CadastraLivroFilmeSerie {
     // Método para cadastrar série
     public void cadastraSerie(String titulo, String gender,Year anoLancamento, Year anoEncerramento, String elenco, String tituloOriginal, String ondeVer, int num_episodios,
                               Year temporada_ano, int pontuacao, String review) {
-        if (titulo == null || gender == null || anoLancamento == null || elenco == null || tituloOriginal == null || ondeVer == null)
+        if (titulo == null || gender == null || elenco == null)
             throw new IllegalArgumentException("Todos os campos devem ser preenchidos.");
 
         yearTime(anoLancamento);
 
         for (Serie item : listSerie) {
-            if (item.getTitulo().equals(titulo))
+            if (item.getTitulo().toLowerCase().trim().equals(titulo))
                 throw new RuntimeException("Série já cadastrada.");}
 
         Serie serie = new Serie(titulo, gender, anoLancamento, anoEncerramento, elenco, tituloOriginal, ondeVer);
@@ -74,7 +74,7 @@ class CadastraLivroFilmeSerie {
     public void listarSeries() {
         for (Serie item : listSerie)
             System.out.println("Series: " + item);}
-    
+
     public List<Livro> getListLivro() {return new ArrayList<>(listLivro);}
     public List<Filme> getListFilme(){return new ArrayList<>(listFilme);}
     public List<Serie> getListSerie(){return new ArrayList<>(listSerie);}
@@ -83,40 +83,37 @@ class CadastraLivroFilmeSerie {
 
 class AvaliaLivroFilmeSerie {
     private final CadastraLivroFilmeSerie listcadastro;
-
-    public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {
-        this. listcadastro = cadastro;
-    }
-
-    public boolean avaliaLivro(int avaliacaoUsuario, String tituloOriginal) {
+    public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {this. listcadastro = cadastro;}
+    
+    public boolean avaliaLivro(int avaliacaoUsuario, String titulo) {
         List<Livro> listAvaliaLivro =  listcadastro.getListLivro();
         if (listAvaliaLivro.isEmpty()) {
             System.out.println("Nenhum livro cadastrado para avaliação.");
             return false;
         }
         for (Livro livro : listAvaliaLivro) {
-            if (livro.getTitulo().equals(tituloOriginal)) {
+            if (livro.getTitulo().toLowerCase().trim().equals(titulo)) {
                 livro.setAvaliacao(avaliacaoUsuario);
                 return true;
             }
         } return false;
     }
 
-    public boolean avaliaFilme(int avaliacaoUsuario, String tituloOriginal) {
+    public boolean avaliaFilme(int avaliacaoUsuario, String titulo) {
         List<Filme> listAvaliaFilme =  listcadastro.getListFilme();
         if (listAvaliaFilme.isEmpty()) {
             System.out.print("Nenhum Filme cadastrado para avaliação.");
             return false;
         }
         for (Filme filme : listAvaliaFilme) {
-            if (filme.getTitulo().equals(tituloOriginal)) {
+            if (filme.getTitulo().toLowerCase().trim().equals(titulo)) {
                 filme.setAvalia_filme(avaliacaoUsuario);
                 return true;
             }
         } return false;
     }
 
-    public boolean avaliaSerie(int avaliacaoUsuario, String tituloOriginal){
+    public boolean avaliaSerie(int avaliacaoUsuario, String titulo){
         List<Serie> listAvaliaTemporada = listcadastro.getListSerie();
 
         if (listAvaliaTemporada.isEmpty()) {
@@ -124,7 +121,7 @@ class AvaliaLivroFilmeSerie {
             return false;
         }
         for (Serie serie : listAvaliaTemporada) {
-            if (serie.getTitulo().equals(tituloOriginal)) {
+            if (serie.getTitulo().toLowerCase().trim().equals(titulo)) {
                 serie.getTemporada().getFirst().setPontuacao(avaliacaoUsuario);
                 float novaPontuacaoMedia = calculaPontuacaoMedia();
                 for (Serie item : listAvaliaTemporada) {
@@ -134,14 +131,14 @@ class AvaliaLivroFilmeSerie {
         } return false;
     }
 
-    public boolean temporadasReview(String review, String tituloOriginal){
+    public boolean temporadasReview(String review, String titulo){
         List<Serie> listAvaliaTemporada = listcadastro.getListSerie();
         if (listAvaliaTemporada.isEmpty()) {
             System.out.println("Nenhuma série cadastrada para avaliação.");
             return false;
         }
         for (Serie serie : listAvaliaTemporada){
-            if(serie.getTitulo().equals(tituloOriginal)){
+            if(serie.getTitulo().toLowerCase().trim().equals(titulo)){
                 serie.getTemporada().getFirst().setReview(review);
                 return true;
             }
@@ -405,7 +402,6 @@ class ListaSerie{
         }
 }
 
-
 public class Main {
     public static void main(String[] args) {
         CadastraLivroFilmeSerie cadastro = new CadastraLivroFilmeSerie();
@@ -413,54 +409,63 @@ public class Main {
         BuscaLivro buscalivro = new BuscaLivro(cadastro);
         BuscaFilmeSerie buscafilmeserie = new BuscaFilmeSerie(cadastro);
         ListaLivro listaLivro = new ListaLivro(cadastro);
+        Review review = new Review();
 
         cadastro.cadastraLivro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins", "123456789", Year.of(1954), "Fantasia", "1ª Edição", false, 0, "", 0);
-        cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2026), "19;00", "Fantasia", "baraq", "parkison Lucas liane Jesiane", "mazon", "teto", 0);
+        cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2026), "19;00", "Fantasia", "Eduard", "parkison Lucas liane Jesiane", "mazon", "teto", 0);
         cadastro.cadastraSerie("Breaking Bad", "Drama", Year.of(2003), Year.of(2026), "Bryan Cranston, Aaron Paul", "Breaking Bad", "Netflix", 0, Year.of(2025), 0, "");
 
         cadastro.listarLivros();
         cadastro.listarFilmes();
         cadastro.listarSeries();
 
-        System.out.println("\n\nAvaliação: \n");
         boolean a1 = avalia.avaliaLivro(3, "O Senhor dos Anéis");
-        boolean a2 = avalia.avaliaFilme(3, "Caminhos");
-        boolean a3 = avalia.avaliaSerie(5, "Breaking Bad");
-        System.out.println("\n\nReviw: \n");
-        boolean r1 = avalia.temporadasReview("Uma bósta", "Breaking Bad");
+        boolean a2 = avalia.avaliaFilme(4, "Caminhos");
+        boolean a3 = avalia.avaliaSerie(1, "Breaking Bad");
 
-        System.out.println("\n            BUSCA: \n\n");
-        Livro ano = buscalivro.porAno(Year.of(2026));
-        Livro isbn = buscalivro.porISBN("123456789");
-        Filme ator = buscafilmeserie.porAtor("LiaNe");
+        boolean r1 = avalia.temporadasReview("Uma porcaria", "Breaking Bad");
+
+        System.out.println("\n\nBUSCA: \n");
+        Livro ano_livro = buscalivro.porAno(Year.of(2026));
+        Livro isbn_livro = buscalivro.porISBN("123456789");
+        Livro titulo_livro = buscalivro.porTitulo("O Senhor dos Anéis");
+        Livro genero_livro = buscalivro.porGenero("Fantasia");
+        Livro autor_livro = buscalivro.porAutor("HarperCollins");
+
+        Filme ator_filme = buscafilmeserie.porAtor("LiaNe");
+        Filme ano_filme = buscafilmeserie.porAnoLancamento(Year.of(2026));
+        Filme diretor_filme = buscafilmeserie.porDiretor("Eduard");
+        Filme genero_filme = buscafilmeserie.porGenero("Fantasia");
+        Filme titulo_filme = buscafilmeserie.porTitulo("Caminhos");
+
+        Serie titulo_serie = buscafilmeserie.buscaSeriePorTitulo("Breaking Bad");
+
         listaLivro.porAvaliacaoCrescente();
         listaLivro.porAvaliacaoDecrescente();
 
-        //System.out.println("\nAtor: " );
-
-
     }
 }
 
-/*
 class Review {
-
-    public int obterAvaliacao(){
+    Scanner scanner = new Scanner(System.in);
+    public int pontuarLivroFilmeserie() {
+        int avaliacao;
         do {
-        System.out.print("Avalie (de 1 a 5): ");
-        while (!scanner.hasNextInt()) {
-            System.out.print("Entrada inválida. Insira um número de 1 a 5: ");
-            scanner.next();
-        }
-        avaliacao = scanner.nextInt();
-        if (avaliacao < 1 || avaliacao > 5) {
-            System.out.println("Avaliação fora do intervalo permitido. Tente novamente.");
-        }
-    } while (avaliacao < 1 || avaliacao > 5);
+            System.out.print("Avalie (de 1 a 5): ");
+
+            while (!scanner.hasNextInt()) {
+                System.out.print("Entrada inválida. Insira um número de 1 a 5: ");
+                scanner.next();
+            }
+            avaliacao = scanner.nextInt();
+            if (avaliacao < 1 || avaliacao > 5) {
+                System.out.println("Avaliação fora do intervalo permitido. Tente novamente.");
+            }
+        } while (avaliacao < 1 || avaliacao > 5);
         return avaliacao;
     }
 }
- */
+
 
 class Livro {
     private String titulo;
@@ -514,14 +519,14 @@ class Livro {
 
 class Filme {
     private String titulo;
-    private String genero; 
+    private String genero;
     private Year anoLancamento;
-    private String duracao; 
-    private String direcao; 
-    private String roteiro; 
-    private String elenco;  
+    private String duracao;
+    private String direcao;
+    private String roteiro;
+    private String elenco;
     private String tituloOriginal;
-    private String ondeAssistir; 
+    private String ondeAssistir;
     private int avaliafilme;
 
     // Construtor com validações simples
