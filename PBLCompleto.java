@@ -80,7 +80,6 @@ class CadastraLivroFilmeSerie {
     public List<Serie> getListSerie(){return new ArrayList<>(listSerie);}
 }
 
-
 class AvaliaLivroFilmeSerie {
     private final CadastraLivroFilmeSerie listcadastro;
     public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {this. listcadastro = cadastro;}
@@ -161,7 +160,6 @@ class AvaliaLivroFilmeSerie {
         }  return ((float) pontuacaoTotal/contaAvaliacoes);
     }
 }
-
 
 class BuscaFilmeSerie {
     private final CadastraLivroFilmeSerie cadastro;
@@ -402,6 +400,36 @@ class ListaSerie{
         }
 }
 
+class RemoveLivroFilmeSerie {
+    private final CadastraLivroFilmeSerie cadastro;
+    public RemoveLivroFilmeSerie (CadastraLivroFilmeSerie cadastro) {this.cadastro = cadastro;}
+
+    public void removeLivro(String titulo){
+        List<Livro> listLivro = cadastro.getListLivro();
+        if (listLivro.isEmpty()) {
+            System.out.println("Nenhum livro cadastrado.");
+            return;}
+        listLivro.removeIf(livro -> livro.getTitulo().toLowerCase().trim().equalsIgnoreCase(titulo.toLowerCase().trim()));
+    }
+
+    public void removeFilme(String titulo) {
+        List<Filme> listFilme = cadastro.getListFilme();
+        if (listFilme.isEmpty()) {
+            System.out.println("Nenhum livro cadastrado.");
+            return;}
+        listFilme.removeIf(filme -> filme.getTitulo().toLowerCase().trim().equalsIgnoreCase(titulo.toLowerCase().trim()));
+    }
+
+    public void removeSerie(String titulo){
+        List<Serie> listSerie = cadastro.getListSerie();
+        if (listSerie.isEmpty()) {
+            System.out.println("Nenhum livro cadastrado.");
+            return;}
+        listSerie.removeIf(serie -> serie.getTitulo().toLowerCase().trim().equalsIgnoreCase(titulo.toLowerCase().trim()));
+    }
+}
+
+
 public class Main {
     public static void main(String[] args) {
         CadastraLivroFilmeSerie cadastro = new CadastraLivroFilmeSerie();
@@ -465,7 +493,6 @@ class Review {
         return avaliacao;
     }
 }
-
 
 class Livro {
     private String titulo;
