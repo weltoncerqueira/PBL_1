@@ -263,141 +263,135 @@ class BuscaLivro {
 
 class ListaLivro {
     private final CadastraLivroFilmeSerie cadastro;
-    public ListaLivro (CadastraLivroFilmeSerie cadastro) {this.cadastro = cadastro;}
 
-    public void porAvaliacaoCrescente() {
+    public ListaLivro(CadastraLivroFilmeSerie cadastro) {
+        this.cadastro = cadastro;
+    }
+
+    public List<Livro> obterLivrosOrdenadosPorAvaliacaoCrescente() {
         List<Livro> listLivro = cadastro.getListLivro();
         if (listLivro.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
-
+            throw new IllegalStateException("Nenhum livro cadastrado.");
+        }
         listLivro.sort(Comparator.comparingInt(Livro::getAvaliacao));
-        for (Livro livro : listLivro)
-            System.out.println(livro);
+        return listLivro;
     }
 
-    public void porAvaliacaoDecrescente() {
+    public List<Livro> obterLivrosOrdenadosPorAvaliacaoDecrescente() {
         List<Livro> listLivro = cadastro.getListLivro();
         if (listLivro.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
-
+            throw new IllegalStateException("Nenhum livro cadastrado.");
+        }
         listLivro.sort(Comparator.comparingInt(Livro::getAvaliacao).reversed());
-        for (Livro livro : listLivro)
-            System.out.println(livro);
+        return listLivro;
     }
 
-    public void porGenero(){
+    public List<Livro> obterLivrosOrdenadosPorGenero() {
         List<Livro> listLivro = cadastro.getListLivro();
         if (listLivro.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+            throw new IllegalStateException("Nenhum livro cadastrado.");
+        }
         listLivro.sort(Comparator.comparing(Livro::getGender));
-        for (Livro livro : listLivro)
-            System.out.println(livro);
+        return listLivro;
     }
 
-    public void porAnoLancamento(){
+    public List<Livro> obterLivrosOrdenadosPorAnoLancamento() {
         List<Livro> listLivro = cadastro.getListLivro();
         if (listLivro.isEmpty()) {
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+            throw new IllegalStateException("Nenhum livro cadastrado.");
+        }
         listLivro.sort(Comparator.comparing(Livro::getPublicAno));
-        for (Livro livro : listLivro)
-            System.out.println(livro);
+        return listLivro;
     }
-
 }
 
 class ListaFilme {
     private final CadastraLivroFilmeSerie cadastro;
-    public ListaFilme (CadastraLivroFilmeSerie cadastro) {this.cadastro = cadastro;}
 
-    public void porAvaliacaoCrescente(){
+    public ListaFilme(CadastraLivroFilmeSerie cadastro) {
+        this.cadastro = cadastro;
+    }
+
+    public List<Filme> obterFilmesOrdenadosPorAvaliacaoCrescente() {
         List<Filme> listFilme = cadastro.getListFilme();
-        if (listFilme.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listFilme.isEmpty())
+            throw new IllegalStateException("Nenhum Filme cadastrado.");
+
         listFilme.sort(Comparator.comparingInt(Filme::getAvalia_filme));
-        for (Filme filme : listFilme)
-            System.out.println(filme);
+        return listFilme;
     }
 
-    public void porAvaliacaoDecrescente(){
+    public List<Filme> obterFilmesOrdenadosPorAvaliacaoDecrescente() {
         List<Filme> listFilme = cadastro.getListFilme();
-        if (listFilme.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listFilme.isEmpty())
+            throw new IllegalStateException("Nenhum Filme cadastrado.");
+
         listFilme.sort(Comparator.comparingInt(Filme::getAvalia_filme).reversed());
-        for (Filme filme : listFilme)
-            System.out.println(filme);
+        return listFilme;
     }
 
-    public void porGenero(){
+    public List<Filme> obterFilmesOrdenadosPorGenero() {
         List<Filme> listFilme = cadastro.getListFilme();
-        if (listFilme.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listFilme.isEmpty())
+            throw new IllegalStateException("Nenhum Filme cadastrado.");
+
         listFilme.sort(Comparator.comparing(Filme::getGenero));
-        for (Filme filme : listFilme)
-            System.out.println(filme);
+        return listFilme;
     }
 
-    public void porAnoLancamento(){
+    public List<Filme> obterFilmesOrdenadosAnoLancamento() {
         List<Filme> listFilme = cadastro.getListFilme();
-        if (listFilme.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listFilme.isEmpty())
+            throw new IllegalStateException("Nenhum Filme cadastrado.");
+
         listFilme.sort(Comparator.comparing(Filme::getAnoLancamento));
-        listFilme.sort(Comparator.comparing(Filme::getGenero));
-        for (Filme filme : listFilme)
-            System.out.println(filme);
+        return listFilme;
     }
 }
 
 class ListaSerie{
     private final CadastraLivroFilmeSerie cadastro;
-    public ListaSerie (CadastraLivroFilmeSerie cadastro) {this.cadastro = cadastro;}
 
-    public void porAvaliacaoCrescente(){
+    public ListaSerie (CadastraLivroFilmeSerie cadastro) {
+        this.cadastro = cadastro;
+    }
+
+    public List<Serie> obterSerieOrdenadosPorAvaliacaoCrescente(){
         List<Serie> listSerie = cadastro.getListSerie();
-        if (listSerie.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listSerie.isEmpty())
+            throw new IllegalStateException("Nenhuma Série cadastrada.");
+
         listSerie.sort(Comparator.comparing(Serie::getPontuacaoMedia));
-        for (Serie serie : listSerie)
-            System.out.println(serie);
+        return listSerie;
     }
 
-    public void porAvaliacaoDecrescente(){
+    public List<Serie> obterSerieOrdenadosPorAvaliacaoDecrescente(){
         List<Serie> listSerie = cadastro.getListSerie();
-        if (listSerie.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
-        listSerie.sort(Comparator.comparing(Serie::getPontuacaoMedia).reversed());
-        for (Serie serie : listSerie)
-            System.out.println(serie);
+        if (listSerie.isEmpty())
+            throw new IllegalStateException("Nenhuma Série cadastrada.");
+
+        listSerie.sort(Comparator.comparing(Serie::getPontuacaoMedia));
+        return listSerie;
     }
 
-    public void porGenero(){
+    public List<Serie> obterSerieOrdenadosPorGenero(){
         List<Serie> listSerie = cadastro.getListSerie();
-        if (listSerie.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listSerie.isEmpty())
+            throw new IllegalStateException("Nenhuma Série cadastrada.");
+
         listSerie.sort(Comparator.comparing(Serie::getGender));
-        for (Serie serie : listSerie)
-            System.out.println(serie);
+        return listSerie;
     }
 
-    public void porAnoLancamento(){
+    public List<Serie> obterSerieOrdenadosAnoLancamento(){
         List<Serie> listSerie = cadastro.getListSerie();
-        if (listSerie.isEmpty()){
-            System.out.println("Nenhum livro cadastrado.");
-            return;}
+        if (listSerie.isEmpty())
+            throw new IllegalStateException("Nenhuma Série cadastrada.");
+
         listSerie.sort(Comparator.comparing(Serie::getAnoLancamento));
-        for (Serie serie : listSerie)
-            System.out.println(serie);
-        }
+        return listSerie;
+    }
+
 }
 
 class RemoveLivroFilmeSerie {
@@ -439,7 +433,10 @@ public class Main {
         ListaLivro listaLivro = new ListaLivro(cadastro);
         Review review = new Review();
 
-        cadastro.cadastraLivro("O Senhor dos Anéis", "J.R.R. Tolkien", "HarperCollins", "123456789", Year.of(1954), "Fantasia", "1ª Edição", false, 0, "", 0);
+        cadastro.cadastraLivro("Livro A", "Autor A", "Editora A", "ISBN001", Year.of(2020), "Ficção", "Exemplar A", true, 4, "Bom livro", 4);
+        cadastro.cadastraLivro("Livro B", "Autor B", "Editora B", "ISBN002", Year.of(2018), "Não Ficção", "Exemplar B", false, 5, "Excelente livro", 5);
+        cadastro.cadastraLivro("Livro C", "Autor C", "Editora C", "ISBN003", Year.of(2019), "Ficção", "Exemplar C", true, 3, "Livro médio", 3);
+        
         cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2026), "19;00", "Fantasia", "Eduard", "parkison Lucas liane Jesiane", "mazon", "teto", 0);
         cadastro.cadastraSerie("Breaking Bad", "Drama", Year.of(2003), Year.of(2026), "Bryan Cranston, Aaron Paul", "Breaking Bad", "Netflix", 0, Year.of(2025), 0, "");
 
