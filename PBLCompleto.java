@@ -82,7 +82,10 @@ class CadastraLivroFilmeSerie {
 
 class AvaliaLivroFilmeSerie {
     private final CadastraLivroFilmeSerie listcadastro;
-    public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {this. listcadastro = cadastro;}
+
+    public AvaliaLivroFilmeSerie(CadastraLivroFilmeSerie cadastro) {
+        this. listcadastro = cadastro;
+    }
 
     public boolean avaliaLivro(int avaliacaoUsuario, String titulo) {
         List<Livro> listAvaliaLivro =  listcadastro.getListLivro();
@@ -91,7 +94,7 @@ class AvaliaLivroFilmeSerie {
             return false;
         }
         for (Livro livro : listAvaliaLivro) {
-            if (livro.getTitulo().toLowerCase().trim().equals(titulo)) {
+            if (livro.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim())) {
                 livro.setAvaliacao(avaliacaoUsuario);
                 return true;
             }
@@ -99,13 +102,13 @@ class AvaliaLivroFilmeSerie {
     }
 
     public boolean avaliaFilme(int avaliacaoUsuario, String titulo) {
-        List<Filme> listAvaliaFilme =  listcadastro.getListFilme();
+        List<Filme> listAvaliaFilme = listcadastro.getListFilme();
         if (listAvaliaFilme.isEmpty()) {
             System.out.print("Nenhum Filme cadastrado para avaliação.");
             return false;
         }
         for (Filme filme : listAvaliaFilme) {
-            if (filme.getTitulo().toLowerCase().trim().equals(titulo)) {
+            if (filme.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim())) {
                 filme.setAvalia_filme(avaliacaoUsuario);
                 return true;
             }
@@ -120,9 +123,11 @@ class AvaliaLivroFilmeSerie {
             return false;
         }
         for (Serie serie : listAvaliaTemporada) {
-            if (serie.getTitulo().toLowerCase().trim().equals(titulo)) {
+            if (serie.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim())) {
                 serie.getTemporada().getFirst().setPontuacao(avaliacaoUsuario);
+
                 float novaPontuacaoMedia = calculaPontuacaoMedia();
+
                 for (Serie item : listAvaliaTemporada) {
                     item.setPontuacaoMedia(novaPontuacaoMedia);
                 } return true;
@@ -137,7 +142,7 @@ class AvaliaLivroFilmeSerie {
             return false;
         }
         for (Serie serie : listAvaliaTemporada){
-            if(serie.getTitulo().toLowerCase().trim().equals(titulo)){
+            if(serie.getTitulo().toLowerCase().trim().equals(titulo.toLowerCase().trim())){
                 serie.getTemporada().getFirst().setReview(review);
                 return true;
             }
@@ -150,14 +155,18 @@ class AvaliaLivroFilmeSerie {
             System.out.println("Nenhuma série cadastrada para avaliação.");
             return 0;
         }
-        int pontuacaoTotal = 0, contaAvaliacoes = 0;
+        int pontuacaoTotal = 0;
+        int contaAvaliacoes = 0;
 
         for (Serie serie : listAvaliaTemporada) {
             for (SerieTemporadas temporada : serie.getTemporada()) {
                 pontuacaoTotal += temporada.getPontuacao();
                 contaAvaliacoes += 1;
             }
-        }  return ((float) pontuacaoTotal/contaAvaliacoes);
+
+        } if (contaAvaliacoes > 0) {
+            return ((float) pontuacaoTotal / contaAvaliacoes);
+        }return pontuacaoTotal;
     }
 }
 
@@ -370,7 +379,7 @@ class ListaSerie{
         if (listSerie.isEmpty())
             throw new IllegalStateException("Nenhuma Série cadastrada.");
 
-        listSerie.sort(Comparator.comparing(Serie::getPontuacaoMedia));
+        listSerie.sort(Comparator.comparing(Serie::getPontuacaoMedia).reversed());
         return listSerie;
     }
 
@@ -430,15 +439,24 @@ public class Main {
         AvaliaLivroFilmeSerie avalia = new AvaliaLivroFilmeSerie(cadastro);
         BuscaLivro buscalivro = new BuscaLivro(cadastro);
         BuscaFilmeSerie buscafilmeserie = new BuscaFilmeSerie(cadastro);
-        ListaLivro listaLivro = new ListaLivro(cadastro);
+        ListaLivro listalivro = new ListaLivro(cadastro);
+        ListaFilme listafilme = new ListaFilme(cadastro);
+        ListaSerie listaserie = new ListaSerie(cadastro);
         Review review = new Review();
 
         cadastro.cadastraLivro("Livro A", "Autor A", "Editora A", "ISBN001", Year.of(2020), "Ficção", "Exemplar A", true, 4, "Bom livro", 4);
-        cadastro.cadastraLivro("Livro B", "Autor B", "Editora B", "ISBN002", Year.of(2018), "Não Ficção", "Exemplar B", false, 5, "Excelente livro", 5);
+        cadastro.cadastraLivro("Livro B", "Autor B", "Editora B", "ISBN002", Year.of(2018), "Não Ficção", "Exemplar B", false, 5, "Excelente livro", 2);
         cadastro.cadastraLivro("Livro C", "Autor C", "Editora C", "ISBN003", Year.of(2019), "Ficção", "Exemplar C", true, 3, "Livro médio", 3);
         System.out.println("\n");
-        cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2026), "19;00", "Fantasia", "Eduard", "parkison Lucas liane Jesiane", "mazon", "teto", 0);
-        cadastro.cadastraSerie("Breaking Bad", "Drama", Year.of(2003), Year.of(2026), "Bryan Cranston, Aaron Paul", "Breaking Bad", "Netflix", 0, Year.of(2025), 0, "");
+
+        cadastro.cadastraFilme("Caminhos", "Jack", Year.of(2001), "19;00", "Fantasia", "Eduard", "parkison Lucas liane Jesiane", "mazon", "teto", 1);
+        cadastro.cadastraFilme("Livro A", "Autor A", Year.of(2006), "ISBN001", "Marlon", "Ficção", "Exemplar A", "true", "4", 3);
+        cadastro.cadastraFilme("Livro B", "Autor B",Year.of(2003), "ISBN002", "Borda", "Não Ficção", "Exemplar B", "false", "lá", 4);
+
+
+        cadastro.cadastraSerie("Breaking Bad", "Drama", Year.of(2003), Year.of(2026), "Bryan Cranston, Aaron Paul", "Breaking Bad", "Netflix", 2, Year.of(2025), 4, "hee");
+        cadastro.cadastraSerie("Livro A", "Autor A", Year.of(2003), Year.of(2008), "matusalen", "Ficção", "Exemplar A", 12, Year.of(2018), 3, "branco");
+        cadastro.cadastraSerie("Livro B", "Autor B", Year.of(2003), Year.of(2010), "Year.of(2018)", "Não Ficção", "Exemplar B", 11, Year.of(2018), 2, "five");
 
         cadastro.listarLivros();
         cadastro.listarFilmes();
@@ -465,10 +483,14 @@ public class Main {
 
         Serie titulo_serie = buscafilmeserie.buscaSeriePorTitulo("Breaking Bad");
         System.out.print("\n\n");
-        List<Livro> list1 = listaLivro.obterLivrosOrdenadosPorAvaliacaoCrescente();
-        List<Livro> list2 = listaLivro.obterLivrosOrdenadosPorAvaliacaoDecrescente();
-        System.out.println("Crescente: " + list1.get(0).getAvaliacao() + "\n" + list1.get(1).getAvaliacao() + "\n" + list1.get(2).getAvaliacao());
-        System.out.println("Decrescente: " +list2.get(0).getAvaliacao() + "\n" + list2.get(1).getAvaliacao() + "\n" + list2.get(2).getAvaliacao());
+        List<Livro> list1 = listalivro.obterLivrosOrdenadosPorAvaliacaoCrescente();
+        List<Livro> list12 = listalivro.obterLivrosOrdenadosPorAvaliacaoDecrescente();
+        List<Filme> list21 = listafilme.obterFilmesOrdenadosPorAvaliacaoDecrescente();
+        List<Serie> list31 = listaserie.obterSerieOrdenadosPorAvaliacaoCrescente();
+
+        System.out.println("CrescenteLivro: " + list1.get(0).getAvaliacao() + " " + list1.get(1).getAvaliacao() + " " + list1.get(2).getAvaliacao());
+        System.out.println("DecrescenteFilme: " +list21.get(0).getAvalia_filme() + " " + list21.get(1).getAvalia_filme() + " " + list21.get(2).getAvalia_filme());
+        System.out.println("CrescenteSerie: " + list31.get(0).getPontuacaoMedia() + " " + list31.get(1).getPontuacaoMedia() + " " + list31.get(2).getPontuacaoMedia());
     }
 }
 
